@@ -1,0 +1,81 @@
+cabal-version: 1.12
+
+-- This file has been generated from package.yaml by hpack version 0.33.0.
+--
+-- see: https://github.com/sol/hpack
+--
+-- hash: 81e0f444dccf072e8cf9cb7696bb88d07d420379c94912979b3d6549e6f5c670
+
+name:           aoc-template
+version:        0.1.0.0
+description:    A template for Advent of Code projects in Haskell
+homepage:       https://github.com/samcoy3/aoc-template#readme
+bug-reports:    https://github.com/samcoy3/aoc-template/issues
+author:         Sam Coy
+maintainer:     samcoy3@gmail.com
+copyright:      2020 Sam Coy
+license:        BSD3
+license-file:   LICENSE
+build-type:     Simple
+extra-source-files:
+    README.md
+
+source-repository head
+  type: git
+  location: https://github.com/samcoy3/aoc-template
+
+library
+  exposed-modules:
+      Days.Day01
+      Days.Day02
+      Days.Day03
+      Days.Day04
+      Days.Day05
+      Days.Day06
+      Days.Day07
+      Days.Day08
+      Days.Day09
+      Days.Day10
+      Days.Day11
+      Days.Day12
+      Days.Day13
+      Days.Day14
+      Days.Day15
+      Days.Day16
+      Days.Day17
+      Days.Day18
+      Days.Day19
+      Days.Day20
+      Days.Day21
+      Days.Day22
+      Days.Day23
+      Days.Day24
+      Days.Day25
+  other-modules:
+      Paths_aoc_template
+  hs-source-dirs:
+      src
+  default-extensions: EmptyCase FlexibleContexts FlexibleInstances InstanceSigs MultiParamTypeClasses LambdaCase MultiWayIf RecordWildCards TupleSections OverloadedStrings ScopedTypeVariables GADTs
+  build-depends:
+      attoparsec
+    , base >=4.7 && <5
+    , containers
+    , optparse-applicative
+    , text
+  default-language: Haskell2010
+
+executable aoc-template-exe
+  main-is: Main.hs
+  other-modules:
+      Paths_aoc_template
+  hs-source-dirs:
+      app
+  ghc-options: -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      aoc-template
+    , attoparsec
+    , base >=4.7 && <5
+    , containers
+    , optparse-applicative
+    , text
+  default-language: Haskell2010
