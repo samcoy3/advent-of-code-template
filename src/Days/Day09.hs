@@ -1,13 +1,12 @@
 module Days.Day09 (runDay) where
 
+import Data.Attoparsec.Text
 import Data.List
-import Data.Maybe
 import Data.Map (Map)
 import qualified Data.Map as Map
+import Data.Maybe
 import Data.Set (Set)
 import qualified Data.Set as Set
-
-import Data.Attoparsec.Text
 import Data.Text (pack)
 import Data.Void
 
