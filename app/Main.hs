@@ -54,7 +54,7 @@ dayParser =
 
 days :: Map Int (IO ())
 days =
-  Map.fromList . zip [0 ..] $
+  Map.fromList . zip [1 ..] $
     [ Day01.runDay,
       Day02.runDay,
       Day03.runDay,
@@ -87,7 +87,10 @@ performDay (Day d) =
   let action = (d >>= validate >>= (days Map.!?))
    in case action of
         Nothing -> putStrLn "Invalid day"
-        Just a -> a
+        Just a -> do
+          putStrLn "\n********"
+          a
+          putStrLn "********"
 
 main :: IO ()
 main = performDay =<< execParser opts
