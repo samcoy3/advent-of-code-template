@@ -1,14 +1,19 @@
 module Days.Day04 (runDay) where
 
-import Data.Attoparsec.Text
+{- ORMOLU_DISABLE -}
 import Data.List
 import Data.Map (Map)
 import qualified Data.Map as Map
 import Data.Maybe
 import Data.Set (Set)
 import qualified Data.Set as Set
+import Data.Vector (Vector)
+import qualified Data.Vector as Vec
+
+import Data.Attoparsec.Text
 import Data.Text (pack)
 import Data.Void
+{- ORMOLU_ENABLE -}
 
 ------------ DAY LOGIC ------------
 runDay :: IO ()
