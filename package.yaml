@@ -25,6 +25,7 @@ dependencies:
 - attoparsec
 - optparse-applicative
 - mtl
+- vector
 
 library:
   source-dirs: src
