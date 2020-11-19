@@ -20,6 +20,7 @@ description:         A template for Advent of Code projects in Haskell
 
 dependencies:
 - base >= 4.7 && < 5
+- directory
 - containers
 - text
 - attoparsec
@@ -51,5 +52,18 @@ executables:
     - -threaded
     - -rtsopts
     - -with-rtsopts=-N
+    default-extensions:
+    - EmptyCase
+    - FlexibleContexts
+    - FlexibleInstances
+    - InstanceSigs
+    - MultiParamTypeClasses
+    - LambdaCase
+    - MultiWayIf
+    - RecordWildCards
+    - TupleSections
+    - OverloadedStrings
+    - ScopedTypeVariables
+    - GADTs
     dependencies:
     - aoc-template

@@ -32,65 +32,96 @@ import qualified Days.Day25 as Day25 (runDay)
 --- Other imports
 import Data.Map (Map)
 import qualified Data.Map as Map
+import Data.Maybe (fromMaybe)
 import Options.Applicative
+import Text.Printf (printf)
 
-data Day = Day (Maybe Int)
+data Options
+  = AllDays
+  | OneDay
+      { day :: Int,
+        input :: Maybe String
+      }
   deriving (Show)
 
 validate :: Int -> Maybe Int
 validate n = if (n `elem` Map.keys days) then (Just n) else Nothing
 
-dayParser :: Parser Day
-dayParser =
-  Day
-    <$> optional
-      ( option
-          auto
-          ( long "day"
-              <> short 'd'
-              <> help "Choose a day to print the solutions for. Omitting this option will print out all days."
+dayParser :: Parser Options
+dayParser = (OneDay <$> day <*> input) <|> allDays
+  where
+    day =
+      option
+        auto
+        ( long "day"
+            <> short 'd'
+            <> metavar "DAY"
+            <> help "Choose a day to print the solutions for. Omitting this option will print out all days."
+        )
+    input =
+      optional $
+        strOption
+          ( long "input"
+              <> short 'i'
+              <> metavar "FILE"
+              <> help "The file to read the selected day's input from."
           )
-      )
+    allDays =
+      flag'
+        AllDays
+        ( long "all-days"
+            <> help "Present solutions for all of the days of Advent of Code, with default input file names."
+        )
 
-days :: Map Int (IO ())
+days :: Map Int (String -> IO (), String)
 days =
   Map.fromList . zip [1 ..] $
-    [ Day01.runDay,
-      Day02.runDay,
-      Day03.runDay,
-      Day04.runDay,
-      Day05.runDay,
-      Day06.runDay,
-      Day07.runDay,
-      Day08.runDay,
-      Day09.runDay,
-      Day10.runDay,
-      Day11.runDay,
-      Day12.runDay,
-      Day13.runDay,
-      Day14.runDay,
-      Day15.runDay,
-      Day16.runDay,
-      Day17.runDay,
-      Day18.runDay,
-      Day19.runDay,
-      Day20.runDay,
-      Day21.runDay,
-      Day22.runDay,
-      Day23.runDay,
-      Day24.runDay,
-      Day25.runDay
+    [ (Day01.runDay, "input/Day01.txt"),
+      (Day02.runDay, "input/Day02.txt"),
+      (Day03.runDay, "input/Day03.txt"),
+      (Day04.runDay, "input/Day04.txt"),
+      (Day05.runDay, "input/Day05.txt"),
+      (Day06.runDay, "input/Day06.txt"),
+      (Day07.runDay, "input/Day07.txt"),
+      (Day08.runDay, "input/Day08.txt"),
+      (Day09.runDay, "input/Day09.txt"),
+      (Day10.runDay, "input/Day10.txt"),
+      (Day11.runDay, "input/Day11.txt"),
+      (Day12.runDay, "input/Day12.txt"),
+      (Day13.runDay, "input/Day13.txt"),
+      (Day14.runDay, "input/Day14.txt"),
+      (Day15.runDay, "input/Day15.txt"),
+      (Day16.runDay, "input/Day16.txt"),
+      (Day17.runDay, "input/Day17.txt"),
+      (Day18.runDay, "input/Day18.txt"),
+      (Day19.runDay, "input/Day19.txt"),
+      (Day20.runDay, "input/Day20.txt"),
+      (Day21.runDay, "input/Day21.txt"),
+      (Day22.runDay, "input/Day22.txt"),
+      (Day23.runDay, "input/Day23.txt"),
+      (Day24.runDay, "input/Day24.txt"),
+      (Day25.runDay, "input/Day25.txt")
     ]
 
-performDay :: Day -> IO ()
-performDay (Day d) =
-  let action = (d >>= validate >>= (days Map.!?))
-   in case action of
-        Nothing -> putStrLn "Invalid day"
-        Just a -> do
-          putStrLn "\n********"
-          a
-          putStrLn "********"
+performDay :: Options -> IO ()
+performDay o = case o of
+  AllDays ->
+    sequence_ $
+      fmap
+        ( \(d, (a, i)) -> do
+            putStrLn $ "\n***Day " ++ (printf "%02d" d) ++ "***"
+            a i
+        )
+        (Map.toList days)
+  OneDay {..} ->
+    let action = (validate day >>= (days Map.!?))
+     in case action of
+          Nothing -> putStrLn "Invalid day provided. There are 25 days in Advent."
+          Just (d, i) -> do
+            let i' = fromMaybe i input
+            putStrLn $ "\n***Day " ++ (printf "%02d" day) ++ "***"
+            d i'
+            putStrLn "************"
 
 main :: IO ()
 main = performDay =<< execParser opts

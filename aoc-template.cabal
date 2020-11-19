@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 3b2f938f3f945314bc7d6e72726e3a24bf1567bed47e5949a61e85b438b7d213
+-- hash: f3fb99acbc5ba3fd7ba5264cf495dba35e1d4f8ec0d0df313b4023567ac4f1ee
 
 name:           aoc-template
 version:        0.1.0.0
@@ -61,9 +61,11 @@ library
       attoparsec
     , base >=4.7 && <5
     , containers
+    , directory
     , mtl
     , optparse-applicative
     , text
+    , vector
   default-language: Haskell2010
 
 executable aoc-template-exe
@@ -72,13 +74,16 @@ executable aoc-template-exe
       Paths_aoc_template
   hs-source-dirs:
       app
+  default-extensions: EmptyCase FlexibleContexts FlexibleInstances InstanceSigs MultiParamTypeClasses LambdaCase MultiWayIf RecordWildCards TupleSections OverloadedStrings ScopedTypeVariables GADTs
   ghc-options: -threaded -rtsopts -with-rtsopts=-N
   build-depends:
       aoc-template
     , attoparsec
     , base >=4.7 && <5
     , containers
+    , directory
     , mtl
     , optparse-applicative
     , text
+    , vector
   default-language: Haskell2010
