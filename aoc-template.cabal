@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: f3fb99acbc5ba3fd7ba5264cf495dba35e1d4f8ec0d0df313b4023567ac4f1ee
+-- hash: c4d8a62b2bcac61ab97bac7bfb64b1ccca224274b1235c59ffffe88959852306
 
 name:           aoc-template
 version:        0.1.0.0
@@ -56,7 +56,7 @@ library
       Paths_aoc_template
   hs-source-dirs:
       src
-  default-extensions: EmptyCase FlexibleContexts FlexibleInstances InstanceSigs MultiParamTypeClasses LambdaCase MultiWayIf RecordWildCards TupleSections OverloadedStrings ScopedTypeVariables GADTs
+  default-extensions: EmptyCase FlexibleContexts FlexibleInstances InstanceSigs MultiParamTypeClasses LambdaCase MultiWayIf RecordWildCards TupleSections OverloadedStrings ScopedTypeVariables GADTs NumericUnderscores DeriveFunctor DeriveFoldable
   build-depends:
       attoparsec
     , base >=4.7 && <5
@@ -74,7 +74,7 @@ executable aoc-template-exe
       Paths_aoc_template
   hs-source-dirs:
       app
-  default-extensions: EmptyCase FlexibleContexts FlexibleInstances InstanceSigs MultiParamTypeClasses LambdaCase MultiWayIf RecordWildCards TupleSections OverloadedStrings ScopedTypeVariables GADTs
+  default-extensions: EmptyCase FlexibleContexts FlexibleInstances InstanceSigs MultiParamTypeClasses LambdaCase MultiWayIf RecordWildCards TupleSections OverloadedStrings ScopedTypeVariables GADTs NumericUnderscores DeriveFunctor DeriveFoldable
   ghc-options: -threaded -rtsopts -with-rtsopts=-N
   build-depends:
       aoc-template

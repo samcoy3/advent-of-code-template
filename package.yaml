@@ -43,6 +43,9 @@ library:
     - OverloadedStrings
     - ScopedTypeVariables
     - GADTs
+    - NumericUnderscores
+    - DeriveFunctor
+    - DeriveFoldable
 
 executables:
   aoc-template-exe:
@@ -65,5 +68,8 @@ executables:
     - OverloadedStrings
     - ScopedTypeVariables
     - GADTs
+    - NumericUnderscores
+    - DeriveFunctor
+    - DeriveFoldable
     dependencies:
     - aoc-template
