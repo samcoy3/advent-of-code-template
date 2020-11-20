@@ -20,7 +20,7 @@ import Data.Void
 
 ------------ PARSER ------------
 inputParser :: Parser Input
-inputParser = undefined
+inputParser = error "Not implemented yet!"
 
 ------------ TYPES ------------
 type Input = Void
@@ -31,11 +31,11 @@ type OutputB = Void
 
 ------------ PART A ------------
 partA :: Input -> OutputA
-partA = undefined
+partA = error "Not implemented yet!"
 
 ------------ PART B ------------
 partB :: Input -> OutputB
-partB = undefined
+partB = error "Not implemented yet!"
 
 ------------ DAY LOGIC ------------
 runDay :: String -> IO ()
