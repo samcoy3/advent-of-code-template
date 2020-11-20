@@ -21,10 +21,11 @@ description:         A template for Advent of Code projects in Haskell
 dependencies:
 - base >= 4.7 && < 5
 - directory
+- optparse-applicative
+- parser-combinators
+- attoparsec
 - containers
 - text
-- attoparsec
-- optparse-applicative
 - mtl
 - vector
 
