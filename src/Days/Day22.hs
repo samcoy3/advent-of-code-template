@@ -15,7 +15,7 @@ import Data.Attoparsec.Text
 import Data.Void
 {- ORMOLU_ENABLE -}
 
-runDay :: String -> IO ()
+runDay :: Bool -> String -> IO ()
 runDay = R.runDay inputParser partA partB
 
 ------------ PARSER ------------

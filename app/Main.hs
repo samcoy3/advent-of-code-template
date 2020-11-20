@@ -36,7 +36,7 @@ import Data.Maybe (fromMaybe)
 import Options.Applicative
 import Text.Printf (printf)
 
-data Options
+data Days
   = AllDays
   | OneDay
       { day :: Int,
@@ -44,10 +44,14 @@ data Options
       }
   deriving (Show)
 
+type Verbosity = Bool
+
+data Options = Options Days Verbosity
+
 validate :: Int -> Maybe Int
 validate n = if (n `elem` Map.keys days) then (Just n) else Nothing
 
-dayParser :: Parser Options
+dayParser :: Parser Days
 dayParser = (OneDay <$> day <*> input) <|> allDays
   where
     day =
@@ -73,7 +77,17 @@ dayParser = (OneDay <$> day <*> input) <|> allDays
             <> help "Present solutions for all of the days of Advent of Code, with default input file names."
         )
 
-days :: Map Int (String -> IO (), String)
+optionsParser :: Parser Options
+optionsParser = Options <$> dayParser <*> verbosityParser
+  where
+    verbosityParser =
+      switch
+        ( long "verbosity"
+            <> short 'v'
+            <> help "Whether to print out extra info, such as the result of the input parser, and more detailed error messages."
+        )
+
+days :: Map Int (Bool -> String -> IO (), String)
 days =
   Map.fromList . zip [1 ..] $
     [ (Day01.runDay, "input/Day01.txt"),
@@ -104,13 +118,13 @@ days =
     ]
 
 performDay :: Options -> IO ()
-performDay o = case o of
+performDay (Options d v) = case d of
   AllDays ->
     sequence_ $
       fmap
         ( \(d, (a, i)) -> do
             putStrLn $ "\n***Day " ++ (printf "%02d" d) ++ "***"
-            a i
+            a v i
         )
         (Map.toList days)
   OneDay {..} ->
@@ -120,7 +134,7 @@ performDay o = case o of
           Just (d, i) -> do
             let i' = fromMaybe i input
             putStrLn $ "\n***Day " ++ (printf "%02d" day) ++ "***"
-            d i'
+            d v i'
             putStrLn "************"
 
 main :: IO ()
@@ -128,5 +142,5 @@ main = performDay =<< execParser opts
   where
     opts =
       info
-        (dayParser <**> helper)
+        (optionsParser <**> helper)
         (fullDesc <> progDesc "Prints out some Advent of Code solutions.")
