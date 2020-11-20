@@ -1,4 +1,4 @@
-module Util.Parsers where
+module Util.Parsers (coordinateParser) where
 
 import Data.Attoparsec.Text
 import Data.Map (Map)
