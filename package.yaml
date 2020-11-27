@@ -28,6 +28,7 @@ dependencies:
 - text
 - mtl
 - vector
+- pointedlist
 
 library:
   source-dirs: src

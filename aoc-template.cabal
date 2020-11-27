@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 4cd6962613e64d060e0954ce0f04306192584b49f141ce70c6f2d81bb9fe24dd
+-- hash: 594f06f55b5710a1bb1e2657db90243fab5d37aa12b33ffff722c59149a05f06
 
 name:           aoc-template
 version:        0.1.0.0
@@ -66,6 +66,7 @@ library
     , mtl
     , optparse-applicative
     , parser-combinators
+    , pointedlist
     , text
     , vector
   default-language: Haskell2010
@@ -87,6 +88,7 @@ executable aoc-template-exe
     , mtl
     , optparse-applicative
     , parser-combinators
+    , pointedlist
     , text
     , vector
   default-language: Haskell2010

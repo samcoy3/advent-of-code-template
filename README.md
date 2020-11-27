@@ -48,3 +48,4 @@ The default package dependencies for this project are:
 - `optparse-applicative`: For command line parsing.
 - `mtl`: Mainly in anticipation that `State` might be useful. `ExceptT` is also used to catch exceptions in `runDay`.
 - `vector`: In anticipation that fixed-length arrays will come in handy.
+- `pointedlist`: Because Advent of Code loves circular lists
