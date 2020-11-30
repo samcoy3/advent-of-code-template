@@ -9,6 +9,7 @@ import Data.Set (Set)
 import qualified Data.Set as Set
 import Data.Vector (Vector)
 import qualified Data.Vector as Vec
+import qualified Util.Util as U
 
 import qualified Program.RunDay as R (runDay)
 import Data.Attoparsec.Text
