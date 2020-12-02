@@ -38,5 +38,6 @@ mapFromNestedLists = Map.fromList . attachCoords 0 0
 chunksOf :: Int -> [a] -> [[a]]
 chunksOf n ls
   | n <= 0 = error "Cannot split into chunks of negative length."
+  | null ls = []
   | length ls < n = [ls]
   | otherwise = (take n ls) : (chunksOf n (drop n ls))
