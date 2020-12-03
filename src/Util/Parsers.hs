@@ -35,11 +35,3 @@ around p sep = do
   sep
   b <- p
   return (a, b)
-
--- Takes a parser and a pair of parsers. Parsers an instance of the parser between the enclosing parsers, whose values are discarded.
-between :: Parser a -> (Parser b, Parser c) -> Parser a
-between p (x, y) = do
-  x
-  a <- p
-  y
-  return a
