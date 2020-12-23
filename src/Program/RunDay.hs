@@ -1,4 +1,4 @@
-module Program.RunDay (runDay) where
+module Program.RunDay (runDay, Day) where
 
 import Control.Exception (SomeException, catch)
 import Control.Monad.Except
@@ -6,7 +6,9 @@ import Data.Attoparsec.Text
 import Data.Text (pack)
 import System.Directory (doesFileExist)
 
-runDay :: (Show a, Show b, Show i) => Parser i -> (i -> a) -> (i -> b) -> Bool -> String -> IO ()
+type Day = Bool -> String -> IO ()
+
+runDay :: (Show a, Show b, Show i) => Parser i -> (i -> a) -> (i -> b) -> Day
 runDay inputParser partA partB verbose inputFile = do
   input <- runExceptT $ do
     inputFileExists <- liftIO $ doesFileExist inputFile
