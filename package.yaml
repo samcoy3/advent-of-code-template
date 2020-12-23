@@ -29,6 +29,8 @@ dependencies:
 - mtl
 - vector
 - pointedlist
+- time
+- ansi-terminal
 
 library:
   source-dirs: src
