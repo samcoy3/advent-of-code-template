@@ -48,6 +48,7 @@ library:
     - NumericUnderscores
     - DeriveFunctor
     - DeriveFoldable
+    - DeriveTraversable
 
 executables:
   aoc-template-exe:
@@ -73,5 +74,6 @@ executables:
     - NumericUnderscores
     - DeriveFunctor
     - DeriveFoldable
+    - DeriveTraversable
     dependencies:
     - aoc-template

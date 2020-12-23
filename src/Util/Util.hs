@@ -41,3 +41,16 @@ chunksOf n ls
   | null ls = []
   | length ls < n = [ls]
   | otherwise = (take n ls) : (chunksOf n (drop n ls))
+
+-- Splits a list into maximal contiguous chunks that satisfy the given predicate.
+-- For example:
+--     Input: (> 3) [5,4,3,2,7,6,3,4]
+--     Output: [[5,4],[7,6],[4]]
+chunksByPredicate :: (a -> Bool) -> [a] -> [[a]]
+chunksByPredicate p ls
+  | null ls = []
+  | otherwise =
+    let (prefix, rest) = span p ls
+     in if null prefix
+          then (chunksByPredicate p $ dropWhile (not . p) rest)
+          else prefix : (chunksByPredicate p $ dropWhile (not . p) rest)
