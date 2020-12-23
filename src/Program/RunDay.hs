@@ -60,7 +60,7 @@ runDay inputParser partA partB verbose inputFile = do
           return False
       time3 <- getCurrentTime
 
-      let timeB = realToFrac $ diffUTCTime time2 time1
+      let timeB = realToFrac $ diffUTCTime time3 time2
       when (verbose && successB) $ putStrLn $ printf "(%.2f)" timeB
 
       return $
