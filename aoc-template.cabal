@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: b27ffa5ee63c759cbc3dd23093471e88326a376732ffa8abfdc23ca8af72abc1
+-- hash: d7908d24328f3f340088a49952be05ecef581ad641593427195e49890504b721
 
 name:           aoc-template
 version:        0.1.0.0
@@ -54,6 +54,7 @@ library
       Program.RunDay
       Util.Pair
       Util.Parsers
+      Util.Program
       Util.Util
   other-modules:
       Paths_aoc_template
@@ -61,7 +62,8 @@ library
       src
   default-extensions: EmptyCase FlexibleContexts FlexibleInstances InstanceSigs MultiParamTypeClasses LambdaCase MultiWayIf RecordWildCards TupleSections OverloadedStrings ScopedTypeVariables GADTs NumericUnderscores DeriveFunctor DeriveFoldable DeriveTraversable
   build-depends:
-      attoparsec
+      ansi-terminal
+    , attoparsec
     , base >=4.7 && <5
     , containers
     , directory
@@ -70,6 +72,7 @@ library
     , parser-combinators
     , pointedlist
     , text
+    , time
     , vector
   default-language: Haskell2010
 
@@ -82,7 +85,8 @@ executable aoc-template-exe
   default-extensions: EmptyCase FlexibleContexts FlexibleInstances InstanceSigs MultiParamTypeClasses LambdaCase MultiWayIf RecordWildCards TupleSections OverloadedStrings ScopedTypeVariables GADTs NumericUnderscores DeriveFunctor DeriveFoldable DeriveTraversable
   ghc-options: -threaded -rtsopts -with-rtsopts=-N
   build-depends:
-      aoc-template
+      ansi-terminal
+    , aoc-template
     , attoparsec
     , base >=4.7 && <5
     , containers
@@ -92,5 +96,6 @@ executable aoc-template-exe
     , parser-combinators
     , pointedlist
     , text
+    , time
     , vector
   default-language: Haskell2010

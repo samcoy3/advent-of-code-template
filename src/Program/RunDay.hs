@@ -7,9 +7,15 @@ import Data.Attoparsec.Text
 import Data.Text (pack)
 import System.Directory (doesFileExist)
 
-type Day = Bool -> String -> IO ()
+import Util.Program
+import System.Console.ANSI
+import Data.Time (getCurrentTime, diffUTCTime )
+import Data.Functor
+import Text.Printf
 
-runDay :: (Show a, Show b, Show i) => Parser i -> (i -> a) -> (i -> b) -> Day
+type Day = Bool -> String -> IO (Maybe Double, Maybe Double)
+
+runDay :: (Show a, Show b, Show i) => Parser i -> (i -> a) -> (i -> b) -> Program.RunDay.Day
 runDay inputParser partA partB verbose inputFile = do
   input <- runExceptT $ do
     inputFileExists <- liftIO $ doesFileExist inputFile
@@ -29,13 +35,31 @@ runDay inputParser partA partB verbose inputFile = do
         return i
         
   case input of
-    Left x -> putStrLn x
+    Left x  -> withColor Red (putStrLn x) >> return (Nothing,Nothing)
     Right i -> do
-      putStrLn "Part A:"
-      catch (print $ partA i) $ \(m::SomeException) -> do
-          putStrLn "Couldn't run Part A!"
-          when verbose $ print m
-      putStrLn "Part B:"
-      catch (print $ partB i) $ \(m::SomeException) -> do
-          putStrLn "Couldn't run Part B!"
-          when verbose $ print m
+      withColor Blue $ putStrLn "Part A:"
+      time1 <- getCurrentTime
+      successA <- catch (print (partA i) $> True) 
+        $ \(m::SomeException) -> withColor Red $ do
+              putStrLn "Couldn't run Part A!"
+              when verbose $ print m
+              return False
+      time2 <- getCurrentTime 
+
+      let timeA = realToFrac $ diffUTCTime time2 time1
+      when (verbose && successA) $ putStrLn $ printf "(%.2f)" timeA
+
+      withColor Blue $ putStrLn "Part B:"
+      successB <- catch (print (partB i) $> True) 
+          $ \(m::SomeException) -> withColor Red $ do
+              putStrLn "Couldn't run Part B!"
+              when verbose $ print m
+              return False
+      time3 <- getCurrentTime 
+
+      let timeB = realToFrac  $ diffUTCTime time2 time1
+      when (verbose && successB) $ putStrLn $ printf "(%.2f)" timeB
+
+      return $ (,)
+        (if successA then Just timeA else Nothing)
+        (if successB then Just timeB else Nothing)
