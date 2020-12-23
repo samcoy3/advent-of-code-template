@@ -1,14 +1,9 @@
 module Util.Util where
 
 {- ORMOLU_DISABLE -}
-import Data.List
 import Data.Map.Strict (Map)
 import qualified Data.Map.Strict as Map
-import Data.Maybe
-import Data.Set (Set)
-import qualified Data.Set as Set
-import Data.Vector (Vector)
-import qualified Data.Vector as Vec
+import Debug.Trace (trace)
 {- ORMOLU_ENABLE -}
 
 {-
@@ -54,3 +49,27 @@ chunksByPredicate p ls
      in if null prefix
           then (chunksByPredicate p $ dropWhile (not . p) rest)
           else prefix : (chunksByPredicate p $ dropWhile (not . p) rest)
+
+-- Allows the user to log out some context and then the result of some expression
+-- For example, supposing a is 2, and b is 5:
+--     Input: traceShowIdWithContext (a, b) $ a + b
+--     Output: (2, 5)	7
+traceShowIdWithContext :: (Show a, Show b) => a -> b -> b
+traceShowIdWithContext context result = trace (show context ++ "\t" ++ show result) result
+
+-- Like !!, but with bounds checking
+(!!?) :: [a] -> Int -> Maybe a
+list !!? index =
+  if
+      | index < 0 -> Nothing
+      | index >= (length list) -> Nothing
+      | otherwise -> Just $ list !! index
+
+-- Given a map where the keys are co-ordinates, returns the minimum x, maximum x, minimum y, and maximum y; in that order.
+mapBoundingBox :: Map (Int, Int) a -> (Int, Int, Int, Int)
+mapBoundingBox m =
+  (,,,)
+    (minimum . fmap fst . Map.keys $ m)
+    (maximum . fmap fst . Map.keys $ m)
+    (minimum . fmap snd . Map.keys $ m)
+    (maximum . fmap snd . Map.keys $ m)
