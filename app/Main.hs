@@ -115,44 +115,47 @@ performDay (Options d v) = case d of
   AllDays -> do
       results <- let 
           eachDay d (dayFunc,inputFile) = do
-              withColor Magenta $
-                  putStrLn $ "\n***Day " ++ printf "%02d" d ++ "***"
+              withColor Magenta $ putStrLn $ printf "\n***Day %02d***" d
               dayFunc v inputFile
           in sequence $ Map.mapWithKey eachDay days
-      
-      putStrLn "\n************\n  Summary:"
 
-      let 
-          partsA = Map.mapKeys ((++ " (a)") . printf "%02d") $ fmap fst results
-          partsB = Map.mapKeys ((++ " (b)") . printf "%02d") $ fmap snd results
-          parts  = Map.toList $ partsA <> partsB
-
-          fails = [ p    | (p,Nothing) <- parts        ]
-          fasts = [(p,t) | (p,Just t)  <- parts, t <  1]
-          slows = [(p,t) | (p,Just t)  <- parts, t >= 1]
-
-      putStrLn ""
-      putStr               $ printf "\n%d parts " $ length fasts
-      withColor Green      $ putStr "completed in under 1 second"
-      putStrLn               ".\nOf the remainder:"
-      unless (null fails) $ do
-          putStr           $ printf "  %d parts" $ length fails
-          withColor Red    $ putStr " failed"
-          putStrLn         $ ":\n    " ++ intercalate ", " fails
-      unless (null slows) $ do
-          putStr           $ printf "  %d parts" $ length slows
-          withColor Yellow $ putStr " took over 1 second to complete"
-          putStrLn ":"
-          forM_ slows 
-              $ \(p,t) -> putStrLn $ printf "    %s took %.2f seconds" p t
+      printSummary results
       
   OneDay {..} -> case days Map.!? day of
       Nothing -> putStrLn "Invalid day provided. There are 25 days in Advent."
-      Just (dayFunc, i) -> do
-        let i' = fromMaybe i input
+      Just (dayFunc, inputFile) -> do
+        let i' = fromMaybe inputFile input
         withColor Magenta $ putStrLn $ printf "\n***Day %02d***" day
         dayFunc v i'
         withColor Magenta $ putStrLn "************"
+
+
+printSummary :: Map Int (Maybe Double,Maybe Double) -> IO ()
+printSummary results = do
+  putStrLn "\n************\n  Summary:  "
+  let 
+      partsA = Map.mapKeys ((++ " (a)") . printf "%02d") $ fmap fst results
+      partsB = Map.mapKeys ((++ " (b)") . printf "%02d") $ fmap snd results
+      parts  = Map.toList $ partsA <> partsB
+
+      fails = [ p    | (p,Nothing) <- parts        ]
+      fasts = [(p,t) | (p,Just t)  <- parts, t <  1]
+      slows = [(p,t) | (p,Just t)  <- parts, t >= 1]
+
+  putStr               $ printf "\n%d parts " $ length fasts
+  withColor Green      $ putStr "completed in under 1 second"
+  putStrLn               ".\nOf the remainder:"
+  unless (null fails) $ do
+      putStr           $ printf "  %d parts" $ length fails
+      withColor Red    $ putStr " failed"
+      putStrLn         $ ":\n    " ++ intercalate ", " fails
+  unless (null slows) $ do
+      putStr           $ printf "  %d parts" $ length slows
+      withColor Yellow $ putStr " took over 1 second to complete"
+      putStrLn ":"
+      forM_ slows 
+          $ \(p,t) -> putStrLn $ printf "    %s took %.2f seconds" p t
+      
 
 main :: IO ()
 main = performDay =<< execParser opts
@@ -160,4 +163,3 @@ main = performDay =<< execParser opts
     opts = info
         (optionsParser <**> helper)
         (fullDesc <> progDesc "Prints out some Advent of Code solutions.")
-        
