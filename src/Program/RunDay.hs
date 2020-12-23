@@ -1,16 +1,16 @@
 {-# LANGUAGE TypeApplications #-}
+
 module Program.RunDay (runDay, Day) where
 
 import Control.Exception (SomeException, catch)
 import Control.Monad.Except
 import Data.Attoparsec.Text
-import Data.Text (pack)
-import System.Directory (doesFileExist)
-
-import Util.Program
-import System.Console.ANSI
-import Data.Time (getCurrentTime, diffUTCTime )
 import Data.Functor
+import Data.Text (pack)
+import Data.Time (diffUTCTime, getCurrentTime)
+import Program.Color
+import System.Console.ANSI
+import System.Directory (doesFileExist)
 import Text.Printf
 
 type Day = Bool -> String -> IO (Maybe Double, Maybe Double)
@@ -22,10 +22,13 @@ runDay inputParser partA partB verbose inputFile = do
     fileContents <-
       if inputFileExists
         then liftIO $ readFile inputFile
-        else throwError $ unwords ["I couldn't read the input!"
-                                  ,"I was expecting it to be at"
-                                  ,inputFile
-                                  ]
+        else
+          throwError $
+            unwords
+              [ "I couldn't read the input!",
+                "I was expecting it to be at",
+                inputFile
+              ]
     case parseOnly inputParser . pack $ fileContents of
       Left e -> throwError $ "Parser failed to read input. Error:\n" ++ e
       Right i -> do
@@ -33,33 +36,34 @@ runDay inputParser partA partB verbose inputFile = do
           liftIO $ putStrLn "Parser output:"
           liftIO $ print i
         return i
-        
+
   case input of
-    Left x  -> withColor Red (putStrLn x) >> return (Nothing,Nothing)
+    Left x -> withColor Red (putStrLn x) >> return (Nothing, Nothing)
     Right i -> do
       withColor Blue $ putStrLn "Part A:"
       time1 <- getCurrentTime
-      successA <- catch (print (partA i) $> True) 
-        $ \(m::SomeException) -> withColor Red $ do
-              putStrLn "Couldn't run Part A!"
-              when verbose $ print m
-              return False
-      time2 <- getCurrentTime 
+      successA <- catch (print (partA i) $> True) $
+        \(m :: SomeException) -> withColor Red $ do
+          putStrLn "Couldn't run Part A!"
+          when verbose $ print m
+          return False
+      time2 <- getCurrentTime
 
       let timeA = realToFrac $ diffUTCTime time2 time1
       when (verbose && successA) $ putStrLn $ printf "(%.2f)" timeA
 
       withColor Blue $ putStrLn "Part B:"
-      successB <- catch (print (partB i) $> True) 
-          $ \(m::SomeException) -> withColor Red $ do
-              putStrLn "Couldn't run Part B!"
-              when verbose $ print m
-              return False
-      time3 <- getCurrentTime 
+      successB <- catch (print (partB i) $> True) $
+        \(m :: SomeException) -> withColor Red $ do
+          putStrLn "Couldn't run Part B!"
+          when verbose $ print m
+          return False
+      time3 <- getCurrentTime
 
-      let timeB = realToFrac  $ diffUTCTime time2 time1
+      let timeB = realToFrac $ diffUTCTime time2 time1
       when (verbose && successB) $ putStrLn $ printf "(%.2f)" timeB
 
-      return $ (,)
-        (if successA then Just timeA else Nothing)
-        (if successB then Just timeB else Nothing)
+      return $
+        (,)
+          (if successA then Just timeA else Nothing)
+          (if successB then Just timeB else Nothing)
