@@ -33,9 +33,10 @@ import Data.Map (Map)
 import qualified Data.Map as Map
 import Data.Maybe (fromMaybe)
 import Options.Applicative
-import Program.RunDay (Day)
+import qualified Control.Applicative.Combinators as C (option)
+import Program.RunDay (Day, Verbosity (Quiet, Timings, Verbose))
 import Data.List (intercalate)
-import Control.Monad (unless, when,  forM_)
+import Control.Monad (unless, forM_)
 
 -- Data Output
 import Text.Printf (printf)
@@ -50,8 +51,6 @@ data Days
         input :: Maybe String
       }
   deriving (Show)
-
-type Verbosity = Bool
 
 data Options = Options Days Verbosity
 
@@ -82,16 +81,27 @@ dayParser = (OneDay <$> day <*> input) <|> allDays
 optionsParser :: Parser Options
 optionsParser = Options <$> dayParser <*> verbosityParser
   where
+    verbosityParser :: Parser Verbosity
     verbosityParser =
-      switch $
-        long "verbosity" <> short 'v'
-          <> help
-            ( unwords
-                [ "Whether to print out extra info, such as the",
-                  "result of the input parser, and more detailed",
-                  "error messages."
-                ]
-            )
+      C.option Quiet $
+        ( flag' Verbose $
+            long "verbose" <> short 'v'
+              <> help
+                ( unwords
+                    [ "Whether to print out extra info, such as the",
+                      "result of the input parser, and more detailed",
+                      "error messages.",
+                      "Also enables timing of solutions."
+                    ]
+                )
+        )
+          <|> ( flag' Timings $
+                  long "timings" <> short 't'
+                    <> help
+                      ( unwords
+                          ["Whether to enable timing of the solutions."]
+                      )
+              )
 
 days :: Map Int (Day, String)
 days =

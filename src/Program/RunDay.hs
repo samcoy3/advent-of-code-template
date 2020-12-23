@@ -1,6 +1,6 @@
 {-# LANGUAGE TypeApplications #-}
 
-module Program.RunDay (runDay, Day) where
+module Program.RunDay (runDay, Day, Verbosity (Quiet, Timings, Verbose)) where
 
 import Control.Exception (SomeException, catch)
 import Control.Monad.Except
@@ -13,10 +13,12 @@ import System.Console.ANSI
 import System.Directory (doesFileExist)
 import Text.Printf
 
-type Day = Bool -> String -> IO (Maybe Double, Maybe Double)
+data Verbosity = Quiet | Timings | Verbose deriving (Eq, Show, Ord)
+
+type Day = Verbosity -> String -> IO (Maybe Double, Maybe Double)
 
 runDay :: (Show a, Show b, Show i) => Parser i -> (i -> a) -> (i -> b) -> Program.RunDay.Day
-runDay inputParser partA partB verbose inputFile = do
+runDay inputParser partA partB verbosity inputFile = do
   input <- runExceptT $ do
     inputFileExists <- liftIO $ doesFileExist inputFile
     fileContents <-
@@ -32,7 +34,7 @@ runDay inputParser partA partB verbose inputFile = do
     case parseOnly inputParser . pack $ fileContents of
       Left e -> throwError $ "Parser failed to read input. Error:\n" ++ e
       Right i -> do
-        when verbose $ do
+        when (verbosity == Verbose) $ do
           liftIO $ putStrLn "Parser output:"
           liftIO $ print i
         return i
@@ -45,23 +47,23 @@ runDay inputParser partA partB verbose inputFile = do
       successA <- catch (print (partA i) $> True) $
         \(m :: SomeException) -> withColor Red $ do
           putStrLn "Couldn't run Part A!"
-          when verbose $ print m
+          when (verbosity == Verbose) $ print m
           return False
       time2 <- getCurrentTime
 
       let timeA = realToFrac $ diffUTCTime time2 time1
-      when (verbose && successA) $ putStrLn $ printf "(%.2f)" timeA
+      when (verbosity >= Timings && successA) $ putStrLn $ printf "(%.2f)" timeA
 
       withColor Blue $ putStrLn "Part B:"
       successB <- catch (print (partB i) $> True) $
         \(m :: SomeException) -> withColor Red $ do
           putStrLn "Couldn't run Part B!"
-          when verbose $ print m
+          when (verbosity == Verbose) $ print m
           return False
       time3 <- getCurrentTime
 
       let timeB = realToFrac $ diffUTCTime time3 time2
-      when (verbose && successB) $ putStrLn $ printf "(%.2f)" timeB
+      when (verbosity >= Timings && successB) $ putStrLn $ printf "(%.2f)" timeB
 
       return $
         (,)
