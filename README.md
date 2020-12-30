@@ -33,6 +33,7 @@ If you think the structure of the `Day` files needs changing to better suit your
 I've turned several language extensions on by default. These are:
 - `DeriveFoldable`
 - `DeriveFunctor`
+- `DeriveTraversable`
 - `EmptyCase`
 - `FlexibleContexts`
 - `FlexibleInstances`
@@ -53,10 +54,12 @@ The reason for these should be pretty clear in most cases.
 
 The default package dependencies for this project are:
 - `directory`: This is just for checking if the provided input file exists.
+- `time`: For timing the solutions.
+- `ansi-term`: For colourful pretty printing.
+- `attoparsec`: For the input parser for each day.
 - `containers`: For Map, Set, and so on.
 - `text`: Because `String`s are bad.
-- `attoparsec`: For the input parser for each day.
 - `optparse-applicative`: For command line parsing.
 - `mtl`: Mainly in anticipation that `State` might be useful. `ExceptT` is also used to catch exceptions in `runDay`.
 - `vector`: In anticipation that fixed-length arrays will come in handy.
-- `pointedlist`: Because Advent of Code loves circular lists
+- `pointedlist`: Because Advent of Code loves circular lists.
