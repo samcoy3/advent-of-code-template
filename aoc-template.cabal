@@ -1,19 +1,19 @@
 cabal-version: 1.12
 
--- This file has been generated from package.yaml by hpack version 0.33.0.
+-- This file has been generated from package.yaml by hpack version 0.34.4.
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 952ec817e801b9669d36d467165152266f559cdcad27978d42262e5c5bd1ec25
+-- hash: 46c6d2e209552afe753aaea26d2ad3c744f3679e6d6539834df2f838bfe025a2
 
 name:           aoc-template
-version:        0.1.0.0
+version:        2021.0
 description:    A template for Advent of Code projects in Haskell
 homepage:       https://github.com/samcoy3/advent-of-code-template#readme
 bug-reports:    https://github.com/samcoy3/advent-of-code-template/issues
 author:         Sam Coy
 maintainer:     samcoy3@gmail.com
-copyright:      2020 Sam Coy
+copyright:      2021 Sam Coy
 license:        BSD3
 license-file:   LICENSE
 build-type:     Simple
@@ -60,7 +60,23 @@ library
       Paths_aoc_template
   hs-source-dirs:
       src
-  default-extensions: EmptyCase FlexibleContexts FlexibleInstances InstanceSigs MultiParamTypeClasses LambdaCase MultiWayIf RecordWildCards TupleSections OverloadedStrings ScopedTypeVariables GADTs NumericUnderscores DeriveFunctor DeriveFoldable DeriveTraversable
+  default-extensions:
+      EmptyCase
+      FlexibleContexts
+      FlexibleInstances
+      InstanceSigs
+      MultiParamTypeClasses
+      LambdaCase
+      MultiWayIf
+      RecordWildCards
+      TupleSections
+      OverloadedStrings
+      ScopedTypeVariables
+      GADTs
+      NumericUnderscores
+      DeriveFunctor
+      DeriveFoldable
+      DeriveTraversable
   build-depends:
       ansi-terminal
     , attoparsec
@@ -82,7 +98,23 @@ executable aoc-template-exe
       Paths_aoc_template
   hs-source-dirs:
       app
-  default-extensions: EmptyCase FlexibleContexts FlexibleInstances InstanceSigs MultiParamTypeClasses LambdaCase MultiWayIf RecordWildCards TupleSections OverloadedStrings ScopedTypeVariables GADTs NumericUnderscores DeriveFunctor DeriveFoldable DeriveTraversable
+  default-extensions:
+      EmptyCase
+      FlexibleContexts
+      FlexibleInstances
+      InstanceSigs
+      MultiParamTypeClasses
+      LambdaCase
+      MultiWayIf
+      RecordWildCards
+      TupleSections
+      OverloadedStrings
+      ScopedTypeVariables
+      GADTs
+      NumericUnderscores
+      DeriveFunctor
+      DeriveFoldable
+      DeriveTraversable
   ghc-options: -threaded -rtsopts -with-rtsopts=-N
   build-depends:
       ansi-terminal
