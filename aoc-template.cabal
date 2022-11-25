@@ -1,19 +1,19 @@
 cabal-version: 1.12
 
--- This file has been generated from package.yaml by hpack version 0.34.4.
+-- This file has been generated from package.yaml by hpack version 0.35.0.
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 46c6d2e209552afe753aaea26d2ad3c744f3679e6d6539834df2f838bfe025a2
+-- hash: 74a518596623333f54debbd08849a3f5a987e3c7d13d8b337ef10b1fc25ba29c
 
 name:           aoc-template
-version:        2021.0
+version:        2022.0
 description:    A template for Advent of Code projects in Haskell
 homepage:       https://github.com/samcoy3/advent-of-code-template#readme
 bug-reports:    https://github.com/samcoy3/advent-of-code-template/issues
 author:         Sam Coy
 maintainer:     samcoy3@gmail.com
-copyright:      2021 Sam Coy
+copyright:      2022 Sam Coy
 license:        BSD3
 license-file:   LICENSE
 build-type:     Simple
@@ -61,22 +61,13 @@ library
   hs-source-dirs:
       src
   default-extensions:
-      EmptyCase
-      FlexibleContexts
-      FlexibleInstances
-      InstanceSigs
-      MultiParamTypeClasses
       LambdaCase
       MultiWayIf
       RecordWildCards
-      TupleSections
+      OverloadedRecordDot
       OverloadedStrings
-      ScopedTypeVariables
       GADTs
-      NumericUnderscores
-      DeriveFunctor
-      DeriveFoldable
-      DeriveTraversable
+      GHC2021
   build-depends:
       ansi-terminal
     , attoparsec
@@ -86,7 +77,6 @@ library
     , mtl
     , optparse-applicative
     , parser-combinators
-    , pointedlist
     , text
     , time
     , vector
@@ -99,23 +89,14 @@ executable aoc-template-exe
   hs-source-dirs:
       app
   default-extensions:
-      EmptyCase
-      FlexibleContexts
-      FlexibleInstances
-      InstanceSigs
-      MultiParamTypeClasses
       LambdaCase
       MultiWayIf
       RecordWildCards
-      TupleSections
+      OverloadedRecordDot
       OverloadedStrings
-      ScopedTypeVariables
       GADTs
-      NumericUnderscores
-      DeriveFunctor
-      DeriveFoldable
-      DeriveTraversable
-  ghc-options: -threaded -rtsopts -with-rtsopts=-N
+      GHC2021
+  ghc-options: -threaded -rtsopts -with-rtsopts=-N4 -with-rtsopts=-qa -with-rtsopts=-C0 -funfolding-use-threshold=16 -fexcess-precision -optc-O3 -optc-ffast-math -O2
   build-depends:
       ansi-terminal
     , aoc-template
@@ -126,7 +107,6 @@ executable aoc-template-exe
     , mtl
     , optparse-applicative
     , parser-combinators
-    , pointedlist
     , text
     , time
     , vector

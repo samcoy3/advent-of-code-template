@@ -30,25 +30,17 @@ If you think the structure of the `Day` files needs changing to better suit your
 
 ## Default Language Extensions
 
-I've turned several language extensions on by default. These are:
-- `DeriveFoldable`
-- `DeriveFunctor`
-- `DeriveTraversable`
-- `EmptyCase`
-- `FlexibleContexts`
-- `FlexibleInstances`
+I've turned several language extensions on by default, including the set of stable and reasonable extensions implied by the `GHC2021` extension pack.
+The other extensions enabled by default are:
 - `GADTs`
-- `InstanceSigs`
 - `LambdaCase`
-- `MultiParamTypeClasses`
 - `MultiWayIf`
-- `NumericUnderscores`
+- `OverloadedRecordDot`
 - `OverloadedStrings`
 - `RecordWildCards`
-- `TupleSections`
-- `ScopedTypeVariables`
 
 The reason for these should be pretty clear in most cases.
+If you want to change the default extensions, the list is in `package.yaml`.
 
 ## Default Dependencies
 
@@ -62,4 +54,3 @@ The default package dependencies for this project are:
 - `optparse-applicative`: For command line parsing.
 - `mtl`: Mainly in anticipation that `State` might be useful. `ExceptT` is also used to catch exceptions in `runDay`.
 - `vector`: In anticipation that fixed-length arrays will come in handy.
-- `pointedlist`: Because Advent of Code loves circular lists.

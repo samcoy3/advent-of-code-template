@@ -1,10 +1,10 @@
 name:                aoc-template
-version:             2021.0
+version:             2022.0
 github:              "samcoy3/advent-of-code-template"
 license:             BSD3
 author:              "Sam Coy"
 maintainer:          "samcoy3@gmail.com"
-copyright:           "2021 Sam Coy"
+copyright:           "2022 Sam Coy"
 
 extra-source-files:
 - README.md
@@ -30,27 +30,17 @@ dependencies:
 - text
 - mtl
 - vector
-- pointedlist
 
 library:
   source-dirs: src
   default-extensions:
-    - EmptyCase
-    - FlexibleContexts
-    - FlexibleInstances
-    - InstanceSigs
-    - MultiParamTypeClasses
     - LambdaCase
     - MultiWayIf
     - RecordWildCards
-    - TupleSections
+    - OverloadedRecordDot
     - OverloadedStrings
-    - ScopedTypeVariables
     - GADTs
-    - NumericUnderscores
-    - DeriveFunctor
-    - DeriveFoldable
-    - DeriveTraversable
+    - GHC2021
 
 executables:
   aoc-template-exe:
@@ -68,21 +58,12 @@ executables:
     - -optc-ffast-math
     - -O2
     default-extensions:
-    - EmptyCase
-    - FlexibleContexts
-    - FlexibleInstances
-    - InstanceSigs
-    - MultiParamTypeClasses
     - LambdaCase
     - MultiWayIf
     - RecordWildCards
-    - TupleSections
+    - OverloadedRecordDot
     - OverloadedStrings
-    - ScopedTypeVariables
     - GADTs
-    - NumericUnderscores
-    - DeriveFunctor
-    - DeriveFoldable
-    - DeriveTraversable
+    - GHC2021
     dependencies:
     - aoc-template
