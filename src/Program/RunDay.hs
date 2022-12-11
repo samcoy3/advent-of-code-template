@@ -18,7 +18,10 @@ data Verbosity = Quiet | Timings | Verbose deriving (Eq, Show, Ord)
 type Day = Verbosity -> String -> IO (Maybe Double, Maybe Double)
 
 runDay :: (Show a, Show b, Show i) => Parser i -> (i -> a) -> (i -> b) -> Program.RunDay.Day
-runDay inputParser partA partB verbosity inputFile = do
+runDay inputParser partA partB verbosity inputFile = runDayWithIO inputParser (print . partA) (print . partB) verbosity inputFile
+
+runDayWithIO :: (Show i) => Parser i -> (i -> IO ()) -> (i -> IO ()) -> Program.RunDay.Day
+runDayWithIO inputParser partA partB verbosity inputFile = do
   input <- runExceptT $ do
     inputFileExists <- liftIO $ doesFileExist inputFile
     fileContents <-
@@ -44,7 +47,7 @@ runDay inputParser partA partB verbosity inputFile = do
     Right i -> do
       withColor Blue $ putStrLn "Part A:"
       time1 <- getCurrentTime
-      successA <- catch (print (partA i) $> True) $
+      successA <- catch ((partA i) $> True) $
         \(m :: SomeException) -> withColor Red $ do
           putStrLn "Couldn't run Part A!"
           when (verbosity == Verbose) $ print m
@@ -55,7 +58,7 @@ runDay inputParser partA partB verbosity inputFile = do
       when (verbosity >= Timings && successA) $ putStrLn $ printf "(%.2f)" timeA
 
       withColor Blue $ putStrLn "Part B:"
-      successB <- catch (print (partB i) $> True) $
+      successB <- catch ((partB i) $> True) $
         \(m :: SomeException) -> withColor Red $ do
           putStrLn "Couldn't run Part B!"
           when (verbosity == Verbose) $ print m
