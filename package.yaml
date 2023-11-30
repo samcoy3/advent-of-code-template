@@ -1,10 +1,10 @@
 name:                aoc-template
-version:             2022.0
+version:             2023.0
 github:              "samcoy3/advent-of-code-template"
 license:             BSD3
 author:              "Sam Coy"
 maintainer:          "samcoy3@gmail.com"
-copyright:           "2022 Sam Coy"
+copyright:           "2023 Sam Coy"
 
 extra-source-files:
 - README.md

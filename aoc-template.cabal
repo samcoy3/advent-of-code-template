@@ -4,16 +4,16 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 74a518596623333f54debbd08849a3f5a987e3c7d13d8b337ef10b1fc25ba29c
+-- hash: 7a7f9450dea923a5226bc8f430781bec861ad44d76f67c5d21935198dc590e29
 
 name:           aoc-template
-version:        2022.0
+version:        2023.0
 description:    A template for Advent of Code projects in Haskell
 homepage:       https://github.com/samcoy3/advent-of-code-template#readme
 bug-reports:    https://github.com/samcoy3/advent-of-code-template/issues
 author:         Sam Coy
 maintainer:     samcoy3@gmail.com
-copyright:      2022 Sam Coy
+copyright:      2023 Sam Coy
 license:        BSD3
 license-file:   LICENSE
 build-type:     Simple
